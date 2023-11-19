@@ -1,4 +1,5 @@
-from typing import Dict, Literal
+from typing import Dict, Literal, Union
+
 
 class Pizza:
     """
@@ -7,7 +8,7 @@ class Pizza:
 
     receipt: Dict[str, str] = {}
 
-    def __init__(self, size: Literal['XL', 'L']) -> None:
+    def __init__(self, size: Union[Literal["XL"], Literal["L"]]) -> None:
         """
         Initialize the Pizza with a specific size.
 
@@ -15,7 +16,7 @@ class Pizza:
         :type size: Literal['XL', 'L']
         :raises ValueError: If the size is not 'XL' or 'L'.
         """
-        if size not in ['XL', 'L']:
+        if size not in ["XL", "L"]:
             raise ValueError(f'Not such size: {size} only "XL" or "L"')
         self.size = size
 
@@ -35,10 +36,9 @@ class Margherita(Pizza):
     """
 
     receipt = {
-       'ingredient_1': 'tomato sauce',
-       'ingredient_2': 'mozzarella',
-       'ingredient_3': 'tomatoes',
-       'ingredient_4': None,
+        "ingredient_1": "tomato sauce",
+        "ingredient_2": "mozzarella",
+        "ingredient_3": "tomatoes",
     }
 
 
@@ -48,10 +48,9 @@ class Pepperoni(Pizza):
     """
 
     receipt = {
-       'ingredient_1': 'tomato sauce',
-       'ingredient_2': 'mozzarella',
-       'ingredient_3': 'pepperoni',
-       'ingredient_4': None,
+        "ingredient_1": "tomato sauce",
+        "ingredient_2": "mozzarella",
+        "ingredient_3": "pepperoni",
     }
 
 
@@ -61,8 +60,8 @@ class Hawaiian(Pizza):
     """
 
     receipt = {
-       'ingredient_1': 'tomato sauce',
-       'ingredient_2': 'mozzarella',
-       'ingredient_3': 'chicken',
-       'ingredient_4': 'pineapples',
+        "ingredient_1": "tomato sauce",
+        "ingredient_2": "mozzarella",
+        "ingredient_3": "chicken",
+        "ingredient_4": "pineapples",
     }

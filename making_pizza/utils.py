@@ -1,7 +1,7 @@
 import time
-from random import randint
 from functools import wraps
-from typing import Callable, Any
+from typing import Any, Callable
+
 
 def log(func: Callable) -> Callable:
     """
@@ -12,6 +12,7 @@ def log(func: Callable) -> Callable:
     :return: The wrapper function.
     :rtype: Callable
     """
+
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         start_time = time.time()
@@ -19,11 +20,13 @@ def log(func: Callable) -> Callable:
         execution_time = time.time() - start_time
         print(f"{func.__name__} — {execution_time:.2f}s!")
         return result
+
     return wrapper
+
 
 def log_with_template(template: str) -> Callable:
     """
-    A decorator factory that creates a decorator to log the execution time 
+    A decorator factory that creates a decorator to log the execution time
     of the function it decorates, using a custom template for the log message.
 
     :param template: The template string to be used for formatting the log message.
@@ -31,6 +34,7 @@ def log_with_template(template: str) -> Callable:
     :return: The decorator.
     :rtype: Callable
     """
+
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -39,5 +43,7 @@ def log_with_template(template: str) -> Callable:
             execution_time = time.time() - start_time
             print(template.format(round(execution_time, 2)))
             return result
+
         return wrapper
+
     return decorator

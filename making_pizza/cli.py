@@ -1,22 +1,19 @@
 import time
 from random import randint
+from typing import Literal, Union
+
 import click
-from making_pizza.pizza import Margherita, Pepperoni, Hawaiian
-from typing import Any
+from pizza import Hawaiian, Margherita, Pepperoni
+from utils import log, log_with_template
 
-from making_pizza.utils import log, log_with_template
-
-pizza_classes = {
-    'margherita': Margherita,
-    'pepperoni': Pepperoni,
-    'hawaiian': Hawaiian
-}
+pizza_classes = {"margherita": Margherita, "pepperoni": Pepperoni, "hawaiian": Hawaiian}
 
 pizza_emoji_dict = {
-    'margherita': '🧀',
-    'pepperoni': '🍕',
-    'hawaiian': '🍍',
+    "margherita": "🧀",
+    "pepperoni": "🍕",
+    "hawaiian": "🍍",
 }
+
 
 @log
 def bake(pizza: str) -> str:
@@ -31,6 +28,7 @@ def bake(pizza: str) -> str:
     time.sleep(randint(1, 3))
     return f"Baked {pizza}!"
 
+
 @log_with_template("🚚 Delivered in {}s!")
 def deliver(pizza: str) -> str:
     """
@@ -43,6 +41,7 @@ def deliver(pizza: str) -> str:
     """
     time.sleep(randint(1, 3))
     return f"Delivered {pizza}!"
+
 
 @log_with_template("🏠 Picked up in {}s!")
 def pickup(pizza: str) -> str:
@@ -57,6 +56,7 @@ def pickup(pizza: str) -> str:
     time.sleep(randint(1, 3))
     return f"Picked up {pizza}!"
 
+
 @click.group()
 def cli() -> None:
     """
@@ -64,11 +64,21 @@ def cli() -> None:
     """
     pass
 
+
 @cli.command()
-@click.argument('pizza_name', type=click.Choice(['margherita', 'pepperoni', 'hawaiian'], case_sensitive=False))
-@click.option('--size', type=click.Choice(['L', 'XL'], case_sensitive=False), default='L')
-@click.option('--delivery', is_flag=True, help='Include this flag to have the pizza delivered')
-def order(pizza_name: str, size: str, delivery: bool) -> None:
+@click.argument(
+    "pizza_name",
+    type=click.Choice(["margherita", "pepperoni", "hawaiian"], case_sensitive=False),
+)
+@click.option(
+    "--size", type=click.Choice(["L", "XL"], case_sensitive=False), default="L"
+)
+@click.option(
+    "--delivery", is_flag=True, help="Include this flag to have the pizza delivered"
+)
+def order(
+    pizza_name: str, size: Union[Literal["XL"], Literal["L"]], delivery: bool
+) -> None:
     """
     Order a pizza with optional delivery.
 
@@ -87,6 +97,7 @@ def order(pizza_name: str, size: str, delivery: bool) -> None:
     else:
         click.echo(pickup(pizza_name.lower()))
 
+
 @cli.command()
 def menu() -> None:
     """
@@ -94,8 +105,12 @@ def menu() -> None:
     """
     click.echo("Our pizza menu:")
     for name, cls in pizza_classes.items():
-        pizza = cls('L')
-        click.echo(f"{name.capitalize()} {pizza_emoji_dict[name]}: {', '.join(filter(None, pizza.dict().values()))}")
+        pizza = cls("L")
+        click.echo(
+            f"{name.capitalize()} "
+            f"{pizza_emoji_dict[name]}: {', '.join(pizza.dict().values())} "
+        )
+
 
 if __name__ == "__main__":
     cli()
