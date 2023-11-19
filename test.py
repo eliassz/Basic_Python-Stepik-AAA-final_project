@@ -1,6 +1,7 @@
 import pytest
 from click.testing import CliRunner
-from making_pizza.cli import bake, cli, deliver, pickup
+
+from cli import bake, cli, deliver, pickup
 
 
 @pytest.fixture

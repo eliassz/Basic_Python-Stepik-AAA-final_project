@@ -3,8 +3,8 @@ from random import randint
 from typing import Literal, Union
 
 import click
-from pizza import Hawaiian, Margherita, Pepperoni
-from utils import log, log_with_template
+from making_pizza.pizza import Hawaiian, Margherita, Pepperoni
+from making_pizza.utils import log, log_with_template
 
 pizza_classes = {"margherita": Margherita, "pepperoni": Pepperoni, "hawaiian": Hawaiian}
 
